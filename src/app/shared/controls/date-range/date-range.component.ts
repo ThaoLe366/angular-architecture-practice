@@ -41,14 +41,14 @@ export class DateRangeComponent implements OnInit, ControlValueAccessor{
   private propagateChange: any = () => {};
   private propagateTouched: any = () => {};
 
-  get min() : Date {
+  get min() : Date | undefined{
     const from = this.form.controls?.['from'].value;
-    return from;
+    return from ? new Date(from) : undefined;
   }
 
-  get max(): Date {
+  get max(): Date | undefined  {
     const to = this.form.controls?.['to'].value;
-    return to;
+    return to ? new Date(to) : undefined;
   }
   registerOnChange(fn: any): void {
     this.propagateChange = fn;

@@ -4,9 +4,9 @@
 @import "mixins";
 @import "fonts";
 
-@import "base/index";
-@import "layout/index";
-@import "vendor/index";
+@import "base";
+@import "layout";
+@import "vendor";
 
 html,
 body {

@@ -1,6 +1,13 @@
+<h2>Files uploading</h2>
+<app-button appFileUpload [multiple]="true" (changed)="onFilesChanged($event)">Upload Multiple</app-button>
+<app-button appFileUpload [crop]="true">Upload single file with crop</app-button>
 <h2> Action </h2>
-
+<app-button (click)="onToggleSpinner()">Toggle Spinner</app-button>
+<app-button (click)="onError()">Error</app-button>
+<app-button (click)="onSuccess()">Success</app-button>
+<h2>Form</h2>
 <div class="wrapper">
+  <app-spinner *ngIf="showSpinner"></app-spinner>
   <form [formGroup]="form" novalidate  autocomplete="off" (ngSubmit)="onSubmit()">
     <app-button type="submit">Submit</app-button>
     <app-button (click)="onPatchValue()">Patch Value</app-button>
