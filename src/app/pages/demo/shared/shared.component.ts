@@ -5,6 +5,7 @@ import {ControlItem} from "@app/models/frontend";
 import {createLogErrorHandler} from "@angular/compiler-cli/ngcc/src/execution/tasks/completion";
 import {markFormGroupTouched} from "@app/shared/controls/utils/form";
 import {CheckNullObject} from "@app/validators/check-null-object.validator";
+import {NotificationService} from "@app/pages/demo/service";
 
 @Component({
   selector: 'app-shared',
@@ -54,14 +55,14 @@ export class SharedComponent implements  OnInit{
       updateOn: 'change',
     }],
     dateRange: [null, {
-      updateOn: 'change', validator: [Validators.required, CheckNullObject( ['from', 'to'])]
+      updateOn: 'change', validators: [Validators.required]
     }]
   });
   isInline:boolean;
   regexErrors = regexErrors;
-
+  showSpinner= false;
   items: ControlItem[];
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private notification: NotificationService) {
     // this.form = new FormGroup({});
     this.isInline = true;
     this.items = [
@@ -98,6 +99,20 @@ export class SharedComponent implements  OnInit{
         },
         autocomplete: 22,
       })
+  }
+  onToggleSpinner() {
+    this.showSpinner = !this.showSpinner;
+  }
+  onError() {
+    this.notification.error('Oops! Something is wrong');
+  }
+
+  onSuccess() {
+    this.notification.success('Everything is fine')
+  }
+
+  onFilesChanged(urls: string | string[]): void {
+    console.log('url = ', urls);
   }
 
 }

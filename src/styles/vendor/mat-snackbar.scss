@@ -1,12 +1,21 @@
+@import "../colors";
+.mat-mdc-snack-bar-container {
+  &.mat-snackbar {
+    &_error {
+      //background: $error;
+      //color: $on-error;
 
-.mat-snackbar {
-  &_error {
-    background: $error;
-    color: $on-error;
-  }
+      --mdc-snackbar-container-color: #B00020;
+      --mat-mdc-snack-bar-button-color: #fff;
+      --mdc-snackbar-supporting-text-color: #fff;
+    }
 
-  &_success {
-    background: $success;
-    color: $on-success;
+    &_success {
+      //background: $success;
+      //color: $on-success;
+      --mdc-snackbar-container-color: #99aa00;
+      --mat-mdc-snack-bar-button-color: $on-success;
+      --mdc-snackbar-supporting-text-color: $on-success;
+    }
   }
 }

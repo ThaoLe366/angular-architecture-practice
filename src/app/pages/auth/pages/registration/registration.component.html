@@ -1,0 +1,39 @@
+<div class="app-page">
+
+  <div class="app-page__header">
+    <h1>Registration</h1>
+  </div>
+  <form [formGroup]="form" (submit)="onSubmit()" (keyup.enter)="onSubmit()"
+        novalidate autocomplete="off">
+
+    <div class="app-page__content">
+      <app-form-field label="Email" [isInline]="false"
+                      [control]="form.controls?.['email']"
+                      [required]="true"
+      >
+        <app-input formControlName="email"></app-input>
+      </app-form-field>
+      <app-form-field label="Password" [isInline]="false"
+                      [control]="form.controls?.['password']"
+                      [required]="true"
+      >
+        <app-input formControlName="password"></app-input>
+      </app-form-field>
+      <app-form-field label="Repeat Password" [isInline]="false"
+                      [control]="form.controls?.['passwordRepeat']"
+                      [required]="true"
+                      [patternError]="regexErrors.password"
+      >
+        <app-input formControlName="passwordRepeat"></app-input>
+      </app-form-field>
+      <div class="error" [class.error_active]="form.hasError('repeat')">
+        Entered passwords don't match
+      </div>
+    </div>
+
+    <div class="app-page__footer">
+      <app-button type="submit">Complete</app-button>
+    </div>
+  </form>
+  <app-spinner *ngIf="loading$ | async"></app-spinner>
+</div>
