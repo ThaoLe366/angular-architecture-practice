@@ -17,15 +17,18 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {effects, reducers} from "@app/store";
-import { DisplayComponent } from './pages/profile/display/display.component';
-import { EmployeeComponent } from './pages/profile/display/employee/employee.component';
-import { RecruiterComponent } from './pages/profile/display/recruiter/recruiter.component';
-import { FormComponent } from './pages/profile/form/form.component';
-import { PersonalComponent } from './pages/profile/form/personal/personal.component';
-import { ProfessionalComponent } from './pages/profile/form/professional/professional.component';
-import { StepperComponent } from './pages/profile/form/stepper/stepper.component';
+import { DisplayComponent } from './pages/profile/pages/display/display.component';
+import { EmployeeComponent } from './pages/profile/pages/display/employee/employee.component';
+import { RecruiterComponent } from './pages/profile/pages/display/recruiter/recruiter.component';
+import { PersonalComponent } from './pages/profile/pages/form/components/personal/personal.component';
+import { ProfessionalComponent } from './pages/profile/pages/form/components/professional/professional.component';
+import { StepperComponent } from './pages/profile/pages/form/components/stepper/stepper.component';
 // import { FilesUploadComponent } from './shared/popups/files-upload/files-upload.component';
 import {FilesUploadModule} from "@app/shared/popups/files-upload/files-upload.module";
+import {ReactiveFormsModule} from "@angular/forms";
+import {ControlsModule, FormFieldModule, InputModule} from "@app/shared";
+import { UserPhotoComponent } from './shared/layout/user-photo/user-photo.component';
+import { FormComponent } from './pages/profile/pages/form/form.component';
 
 // @ts-ignore
 @NgModule({
@@ -35,37 +38,42 @@ import {FilesUploadModule} from "@app/shared/popups/files-upload/files-upload.mo
     DisplayComponent,
     EmployeeComponent,
     RecruiterComponent,
-    FormComponent,
     PersonalComponent,
     ProfessionalComponent,
     StepperComponent,
+    UserPhotoComponent,
+    FormComponent,
     // FilesUploadComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatNativeDateModule,
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatNativeDateModule,
 
-        NotificationModule.forRoot(),
+    NotificationModule.forRoot(),
 
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFirestoreModule,
-        AngularFireAuthModule,
-        AngularFireStorageModule,
-        StoreModule.forRoot(reducers, {
-            runtimeChecks: {
-                strictStateImmutability: true,
-                strictActionImmutability: true,
-            },
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireStorageModule,
+    StoreModule.forRoot(reducers, {
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+      },
 
-        }),
-        EffectsModule.forRoot(effects),
-        StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
-        FilesUploadModule,
+    }),
+    EffectsModule.forRoot(effects),
+    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
+    FilesUploadModule,
+    ReactiveFormsModule,
+    FormFieldModule,
+    InputModule,
+    ControlsModule,
 
 
-    ],
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
