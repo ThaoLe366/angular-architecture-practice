@@ -59,9 +59,11 @@ export class FilesUploadComponent implements OnInit{
     this.files.push(file);
   }
   onUploadComplete(url: string): void {
+    console.log(62, " from file upload ", url)
     this.filesURLs.push(url);
   }
   onComplete(): void {
+    console.log( 66, this.data.multiple , this.filesURLs)
     const res = this.data.multiple ? this.filesURLs : this.filesURLs[0];
     this.dialogRef.close(res);
   }

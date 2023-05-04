@@ -9,13 +9,14 @@ import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {Router} from "@angular/router";
 import {NotificationService} from "@app/pages/demo/service";
-import {catchError, from, map, of, switchMap, take, tap} from "rxjs";
+import {catchError, from, map, of, switchMap, take, tap, withLatestFrom} from "rxjs";
 import {authState, sendEmailVerification} from "@angular/fire/auth";
 import {User} from "@app/models/backend";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {environment} from "@app/environments/environment";
-type Action = fromAction.All;
 
+import * as firebase from 'firebase/compat/app';
+type Action = fromAction.All;
 
 @Injectable()
 export class UserEffect {
@@ -28,6 +29,7 @@ export class UserEffect {
   // @ts-ignore
   init$= createEffect(() => this.action.pipe(
     ofType(fromAction.Types.INIT),
+    tap(() => console.log("Hello from init")),
     switchMap(() => this.afAuth.authState.pipe(take(1))),
     switchMap(authState => {
       if(authState) {
@@ -88,4 +90,32 @@ export class UserEffect {
       catchError(err => of(new fromAction.SignOutError(err.message)))
     ))
   ))
+
+  createInEffect$ = createEffect(() => this.action.pipe(
+    ofType(fromAction.Types.CREATE),
+    map((action: fromAction.Create) => action.user),
+    tap(user => console.log(11962, user)),
+    withLatestFrom(this.afAuth.authState.pipe(take(1))),
+    map(([user, state]) => ({
+      ...user,
+      uid: state.uid,
+      email: state.email,
+      created: firebase.default.firestore.FieldValue.serverTimestamp(),
+    })),
+    switchMap((user: User) => from(this.afs.collection('users').doc(user.uid).set(user)).pipe(
+      tap(() => this.router.navigate(['/profile', user.uid])),
+      map(() =>  fromAction.createUserRequestSuccessState({user})),
+      catchError(err => of( fromAction.createUserRequestErrorState(err.message)))
+    ))
+  ))
+
+  updateInEffect$ = createEffect(() => this.action.pipe(ofType(fromAction.Types.UPDATE),
+    map((action: fromAction.Update) => action.user),
+    tap(user => console.log(112, user)),
+    switchMap(user => from(this.afs.collection('users').doc(user.uid).set(user)).pipe(
+      tap(() => this.router.navigate(['/profile', user.uid])),
+      map(() =>  fromAction.updateUserRequestSuccessState({user})),
+      catchError(err => of( fromAction.updateUserRequestErrorState(err))
+    )))));
+
 }

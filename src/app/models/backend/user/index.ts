@@ -4,7 +4,7 @@ import firebase from "firebase/compat/app";
 export interface User {
   uid: string;
   name: string;
-  photoUrl: string;
+  photoURL: string;
   email: string;
   country: string;
   about?: string;
@@ -13,3 +13,4 @@ export interface User {
   created: firebase.firestore.FieldValue;
   updated?: firebase.firestore.FieldValue;
 }
+export * from './roles';
