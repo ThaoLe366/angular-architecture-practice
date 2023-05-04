@@ -101,5 +101,13 @@ export const userReducer = createReducer(initialState,
   on(fromActions.signOutSuccessState, (state) => ({...state})),
   on(fromActions.signOutErrorState, (state, { message }) => ({...state, error: message, loading: false })),
 
+  on(fromActions.createUserRequestState, state => ({ ...state, loading: true, error: null })),
+  on(fromActions.createUserRequestSuccessState, (state, { user }) => ({ ...state, entity: user, loading: false })),
+  on(fromActions.createUserRequestErrorState, (state, { message } ) => ({  ...state, loading: false, error: message})),
+
+  on(fromActions.updateUserRequestState, state => ({ ...state, loading: true, error: null })),
+  on(fromActions.updateUserRequestSuccessState, (state, { user }) => ({ ...state, entity: user, loading: false })),
+  on(fromActions.updateUserRequestErrorState, (state, { message } ) => ({  ...state, loading: false, error: message})),
+
 
 )

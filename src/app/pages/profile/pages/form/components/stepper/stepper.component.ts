@@ -49,6 +49,7 @@ export class StepperComponent implements OnInit{
   }
   onComplete() {
     this.stepper.check.next('complete');
+    this.stepper.complete.next(true); //TODO: clear
   }
   onCancel() {
     this.stepper.cancel.next();

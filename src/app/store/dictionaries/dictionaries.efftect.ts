@@ -75,7 +75,12 @@ export class DictionariesEffects {
           skills: addDictionary(skills),
           countries: addDictionary(countries),
         };
-        return new fromActions.ReadSuccess(dictionaries);
+        console.log(roles);
+        console.log(addDictionary(roles));
+        console.log(qualifications);
+        console.log(skills);
+        console.log("78 from dictionaries store ")
+        return fromActions.readSuccessState({dictionaries: dictionaries});
       }),
         catchError(err => of(new fromActions.ReadError(err.message))))
 

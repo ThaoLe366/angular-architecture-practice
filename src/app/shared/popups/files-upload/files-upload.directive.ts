@@ -27,7 +27,7 @@ export class FilesUploadDirective {
       }
     })
 
-    dialogRef.afterOpened().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result => {
       console.log("Value when close dialog ", result);
       // @ts-ignore
       this.changed.emit(result || null);

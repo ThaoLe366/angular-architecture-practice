@@ -24,7 +24,8 @@ export class StepperService {
   prev$ = this.prev.asObservable();
 
   complete = new Subject<boolean>();
-  complete$: Observable<boolean>;
+  // complete$: Observable<boolean>;
+  complete$ = this.complete.asObservable();
 
   cancel = new Subject<void>();
   cancel$ = this.cancel.asObservable();
@@ -37,9 +38,10 @@ export class StepperService {
     this.next$ = this.next.asObservable().pipe(
       filter(isOk => isOk)
     );
-    this.complete$ = this.complete.asObservable().pipe(
-      filter(isOk => isOk)
-    )
+    // this.complete$ = this.complete.asObservable().pipe(
+    //   filter(isOk => isOk)
+    // )
+    //this.complete$ = this.complete.asObservable();    //TODO:
   }
 
   init(steps: Step[]) {

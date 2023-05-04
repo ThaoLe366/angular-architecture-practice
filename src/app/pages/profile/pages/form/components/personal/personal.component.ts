@@ -16,7 +16,7 @@ import {StepperService} from "@app/pages/profile/pages/form/components/stepper/s
 
 export interface PersonalForm {
   name: string;
-  photoUrl: string;
+  photoURL: string;
   country: string;
 }
 @Component({
@@ -78,9 +78,14 @@ export class PersonalComponent implements OnInit, OnDestroy{
       this.stepper[type].next(this.form.valid);
     })
   }
-  onPhotoChanged(url: string): void {
+
+  onPhotoChanged(url: string | string[]): void {
+    console.log(" on file upload change ", url)
     if(url) {
-      (this.form.controls)?.['photoURL'].setValue(url);
+      if (typeof url == 'string') {
+        (this.form.controls)?.['photoURL'].setValue(url);
+      }
+
     }
   }
 }

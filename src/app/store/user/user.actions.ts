@@ -1,6 +1,6 @@
 import {Action, createAction, props} from "@ngrx/store";
 import {User} from "@app/models/backend";
-import {EmailPasswordCredentials} from "@app/store/user/user.models";
+import {EmailPasswordCredentials, USerCreateRequest} from "@app/store/user/user.models";
 
 export enum Types {
   INIT = '[User] Init: Start',
@@ -19,6 +19,14 @@ export enum Types {
   SIGN_OUT = '[User] Sign Out: Start',
   SIGN_OUT_SUCCESS = '[User] Sign Out: Success',
   SIGN_OUT_ERROR = '[User] Sign Out: Error',
+
+  CREATE = '[User] Create: Start',
+  CREATE_SUCCESS = '[User] Create: Success',
+  CREATE_ERROR = '[User] Create: Error',
+
+  UPDATE = '[User] Update: Start',
+  UPDATE_SUCCESS = '[User] Update: Success',
+  UPDATE_ERROR = '[User] Update: Error'
 }
 
 export const initState = createAction(Types.INIT);
@@ -108,6 +116,46 @@ export class SignOutError implements Action {
   readonly type = Types.SIGN_OUT_ERROR;
   constructor(public error: string) { }
 }
+
+//=======================
+
+// Create
+
+export class Create implements Action {
+  readonly type = Types.CREATE;
+  constructor(public user: USerCreateRequest) { }
+}
+export class CreateSuccess implements Action {
+  readonly type = Types.CREATE_SUCCESS;
+  constructor(public user: User) { }
+}
+
+export class CreateError implements Action {
+  readonly type = Types.CREATE_ERROR;
+  constructor(public message: string) { }
+}
+export const createUserRequestState = createAction(Types.CREATE, props<{user: USerCreateRequest}>());
+export const createUserRequestSuccessState = createAction(Types.CREATE_SUCCESS, props<{user: User}>());
+export const createUserRequestErrorState = createAction(Types.CREATE_ERROR,props<{message: string}>());
+// Update
+
+export class Update implements Action {
+  readonly type = Types.UPDATE;
+  constructor(public user: User) { }
+}
+
+export class UpdateSuccess implements Action {
+  readonly type = Types.UPDATE_SUCCESS;
+  constructor(public user: User) { }
+}
+
+export class UpdateError implements Action {
+  readonly type = Types.UPDATE_ERROR;
+  constructor(public error: string) { }
+}
+export const updateUserRequestState = createAction(Types.UPDATE, props<{user: User}>());
+export const updateUserRequestSuccessState = createAction(Types.UPDATE_SUCCESS, props<{user: User}>());
+export const updateUserRequestErrorState = createAction(Types.UPDATE_ERROR,props<{message: string}>());
 export type All
   = Init
   | InitAuthorized
@@ -121,5 +169,11 @@ export type All
   | SignUpEmailError
   | SignOut
   | SignOutSuccess
-  | SignOutError;
+  | SignOutError
+  | Create
+  | CreateSuccess
+  | CreateError
+  | Update
+  | UpdateSuccess
+  | UpdateError;
 

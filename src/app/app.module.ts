@@ -5,8 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/header/header.component';
-import { ButtonComponent } from './shared/buttons/button/button.component';
-import {MatNativeDateModule} from "@angular/material/core";
+import {MatDateFormats, MatNativeDateModule} from "@angular/material/core";
 import {NotificationModule} from "@app/pages/demo/service";
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
 import {environment} from "@app/environments/environment";
@@ -17,33 +16,26 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {effects, reducers} from "@app/store";
-import { DisplayComponent } from './pages/profile/pages/display/display.component';
-import { EmployeeComponent } from './pages/profile/pages/display/employee/employee.component';
-import { RecruiterComponent } from './pages/profile/pages/display/recruiter/recruiter.component';
-import { PersonalComponent } from './pages/profile/pages/form/components/personal/personal.component';
-import { ProfessionalComponent } from './pages/profile/pages/form/components/professional/professional.component';
-import { StepperComponent } from './pages/profile/pages/form/components/stepper/stepper.component';
-// import { FilesUploadComponent } from './shared/popups/files-upload/files-upload.component';
 import {FilesUploadModule} from "@app/shared/popups/files-upload/files-upload.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ControlsModule, FormFieldModule, InputModule} from "@app/shared";
-import { UserPhotoComponent } from './shared/layout/user-photo/user-photo.component';
-import { FormComponent } from './pages/profile/pages/form/form.component';
 
+const APP_DATE_FORMATS: MatDateFormats = {
+  parse: {
+    dateInput: { day: 'numeric', month: 'numeric', year: 'numeric' },
+  },
+  display: {
+    dateInput: { day: 'numeric', month: 'short', year: 'numeric' },
+    monthYearLabel: { year: 'numeric', month: 'short' },
+    dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
+    monthYearA11yLabel: { year: 'numeric', month: 'long' }
+  }
+};
 // @ts-ignore
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    DisplayComponent,
-    EmployeeComponent,
-    RecruiterComponent,
-    PersonalComponent,
-    ProfessionalComponent,
-    StepperComponent,
-    UserPhotoComponent,
-    FormComponent,
-    // FilesUploadComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,10 +63,10 @@ import { FormComponent } from './pages/profile/pages/form/form.component';
     FormFieldModule,
     InputModule,
     ControlsModule,
-
-
   ],
   providers: [],
+  exports: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
